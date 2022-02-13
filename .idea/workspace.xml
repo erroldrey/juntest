@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1d3e531c-b07c-445f-aa93-41f9910d5849" name="Changes" comment="" />
+    <list default="true" id="1d3e531c-b07c-445f-aa93-41f9910d5849" name="Changes" comment="review1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/swagger_server/controllers/admin_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/swagger_server/controllers/admin_controller.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -123,8 +131,16 @@
       <workItem from="1644761219541" duration="15000" />
       <workItem from="1644761242115" duration="61000" />
       <workItem from="1644761315498" duration="20000" />
-      <workItem from="1644761638251" duration="1776000" />
+      <workItem from="1644761638251" duration="2239000" />
     </task>
+    <task id="LOCAL-00001" summary="review1">
+      <created>1644763449103</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1644763449103</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,10 +151,26 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="rewiew_!" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="review1" />
+    <option name="LAST_COMMIT_MESSAGE" value="review1" />
   </component>
 </project>

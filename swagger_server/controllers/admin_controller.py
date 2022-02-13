@@ -10,14 +10,14 @@ from swagger_server.models.private_users_list_response_model import PrivateUsers
 from swagger_server import util
 
 
+
 def private_create_users_private_users_post(body):  # noqa: E501
     app.add_url_rule(f'{prefix}/', 'create_account',
                      admin_controller.create_account, methods=['POST'])
     """Создание пользователя
 
-    Здесь возможно занести в базу нового пользователя с минимальной информацией о нем # noqa: E501
-
-    :param body: 
+    Здесь возможно занести в базу нового пользователя о нем # noqa: E501
+    :param body:  
     :type body: dict | bytes
 
     :rtype: PrivateDetailUserResponseModel
