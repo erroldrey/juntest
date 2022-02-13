@@ -1,0 +1,23 @@
+# coding: utf-8
+
+# flake8: noqa
+from __future__ import absolute_import
+# import models into model package
+from swagger_server.models.cities_hint_model import CitiesHintModel
+from swagger_server.models.current_user_response_model import CurrentUserResponseModel
+from swagger_server.models.error_response_model import ErrorResponseModel
+from swagger_server.models.http_validation_error import HTTPValidationError
+from swagger_server.models.login_model import LoginModel
+from swagger_server.models.paginated_meta_data_model import PaginatedMetaDataModel
+from swagger_server.models.private_create_user_model import PrivateCreateUserModel
+from swagger_server.models.private_detail_user_response_model import PrivateDetailUserResponseModel
+from swagger_server.models.private_update_user_model import PrivateUpdateUserModel
+from swagger_server.models.private_users_list_hint_meta_model import PrivateUsersListHintMetaModel
+from swagger_server.models.private_users_list_meta_data_model import PrivateUsersListMetaDataModel
+from swagger_server.models.private_users_list_response_model import PrivateUsersListResponseModel
+from swagger_server.models.update_user_model import UpdateUserModel
+from swagger_server.models.update_user_response_model import UpdateUserResponseModel
+from swagger_server.models.users_list_element_model import UsersListElementModel
+from swagger_server.models.users_list_meta_data_model import UsersListMetaDataModel
+from swagger_server.models.users_list_response_model import UsersListResponseModel
+from swagger_server.models.validation_error import ValidationError

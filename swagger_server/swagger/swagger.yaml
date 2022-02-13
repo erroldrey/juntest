@@ -1,0 +1,952 @@
+openapi: 3.0.2
+info:
+  title: Kefir Python Junior Test
+  version: 0.1.0
+servers:
+- url: /
+paths:
+  /login:
+    post:
+      tags:
+      - auth
+      summary: Вход в систему
+      description: После успешного входа в систему необходимо установить Cookies для
+        пользователя
+      operationId: login_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.auth_controller
+  /logout:
+    get:
+      tags:
+      - auth
+      summary: Выход из системы
+      description: При успешном выходе необходимо удалить установленные Cookies
+      operationId: logout_logout_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.auth_controller
+  /users/current:
+    get:
+      tags:
+      - user
+      summary: Получение данных о текущем пользователе
+      description: "Здесь находится вся информация, доступная пользователю о самом\
+        \ себе,\n        а так же информация является ли он администратором"
+      operationId: current_user_users_current_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Current User Users Current Get
+                type: string
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /users:
+    get:
+      tags:
+      - user
+      summary: Постраничное получение кратких данных обо всех пользователях
+      description: "Здесь находится вся информация, доступная пользователю о други\
+        х пользователях"
+      operationId: users_users_get
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Page
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Size
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersListResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Users Users Get
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /users/{pk}:
+    patch:
+      tags:
+      - user
+      summary: Изменение данных пользователя
+      description: Здесь пользователь имеет возможность изменить свои данные
+      operationId: edit_user_users__pk__patch
+      parameters:
+      - name: pk
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Pk
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserModel'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Edit User Users  Pk  Patch
+                type: string
+                x-content-type: application/json
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Response 404 Edit User Users  Pk  Patch
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /private/users:
+    get:
+      tags:
+      - admin
+      summary: Постраничное получение кратких данных обо всех пользователях
+      description: "Здесь находится вся информация, доступная пользователю о други\
+        х пользователях"
+      operationId: private_users_private_users_get
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Page
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Size
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateUsersListResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Private Users Private Users Get
+                type: string
+                x-content-type: application/json
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Response 403 Private Users Private Users Get
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+    post:
+      tags:
+      - admin
+      summary: Создание пользователя
+      description: Здесь возможно занести в базу нового пользователя с минимальной
+        информацией о нем
+      operationId: private_create_users_private_users_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivateCreateUserModel'
+        required: true
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateDetailUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Private Create Users Private Users Post
+                type: string
+                x-content-type: application/json
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Response 403 Private Create Users Private Users Post
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /private/users/{pk}:
+    get:
+      tags:
+      - admin
+      summary: Детальное получение информации о пользователе
+      description: Здесь администратор может увидеть всю существующую пользовательскую
+        информацию
+      operationId: private_get_user_private_users__pk__get
+      parameters:
+      - name: pk
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Pk
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateDetailUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Private Get User Private Users  Pk  Get
+                type: string
+                x-content-type: application/json
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Response 403 Private Get User Private Users  Pk  Get
+                type: string
+                x-content-type: application/json
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Response 404 Private Get User Private Users  Pk  Get
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+    delete:
+      tags:
+      - admin
+      summary: Удаление пользователя
+      description: Удаление пользователя
+      operationId: private_delete_user_private_users__pk__delete
+      parameters:
+      - name: pk
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Pk
+          type: integer
+      responses:
+        "204":
+          description: Successful Response
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Private Delete User Private Users  Pk  Delete
+                type: string
+                x-content-type: application/json
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Response 403 Private Delete User Private Users  Pk  Delete
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+    patch:
+      tags:
+      - admin
+      summary: Изменение информации о пользователе
+      description: Здесь администратор может изменить любую информацию о пользователе
+      operationId: private_patch_user_private_users__pk__patch
+      parameters:
+      - name: pk
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Pk
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivateUpdateUserModel'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateDetailUserResponseModel'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseModel'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Response 401 Private Patch User Private Users  Pk  Patch
+                type: string
+                x-content-type: application/json
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Response 403 Private Patch User Private Users  Pk  Patch
+                type: string
+                x-content-type: application/json
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Response 404 Private Patch User Private Users  Pk  Patch
+                type: string
+                x-content-type: application/json
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+components:
+  schemas:
+    CitiesHintModel:
+      title: CitiesHintModel
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+      example:
+        name: name
+        id: 0
+    CurrentUserResponseModel:
+      title: CurrentUserResponseModel
+      required:
+      - birthday
+      - email
+      - first_name
+      - is_admin
+      - last_name
+      - other_name
+      - phone
+      type: object
+      properties:
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+        is_admin:
+          title: Is Admin
+          type: boolean
+      example:
+        birthday: 2000-01-23
+        is_admin: true
+        phone: phone
+        last_name: last_name
+        other_name: other_name
+        first_name: first_name
+        email: email
+    ErrorResponseModel:
+      title: ErrorResponseModel
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          title: Code
+          type: integer
+        message:
+          title: Message
+          type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    LoginModel:
+      title: LoginModel
+      required:
+      - login
+      - password
+      type: object
+      properties:
+        login:
+          title: Login
+          type: string
+        password:
+          title: Password
+          type: string
+    PaginatedMetaDataModel:
+      title: PaginatedMetaDataModel
+      required:
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+        page:
+          title: Page
+          type: integer
+        size:
+          title: Size
+          type: integer
+      example:
+        total: 6
+        size: 5
+        page: 1
+    PrivateCreateUserModel:
+      title: PrivateCreateUserModel
+      required:
+      - email
+      - first_name
+      - is_admin
+      - last_name
+      - password
+      type: object
+      properties:
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+        city:
+          title: City
+          type: integer
+        additional_info:
+          title: Additional Info
+          type: string
+        is_admin:
+          title: Is Admin
+          type: boolean
+        password:
+          title: Password
+          type: string
+    PrivateDetailUserResponseModel:
+      title: PrivateDetailUserResponseModel
+      required:
+      - additional_info
+      - birthday
+      - city
+      - email
+      - first_name
+      - id
+      - is_admin
+      - last_name
+      - other_name
+      - phone
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+        city:
+          title: City
+          type: integer
+        additional_info:
+          title: Additional Info
+          type: string
+        is_admin:
+          title: Is Admin
+          type: boolean
+      example:
+        birthday: 2000-01-23
+        is_admin: true
+        phone: phone
+        city: 6
+        additional_info: additional_info
+        last_name: last_name
+        other_name: other_name
+        id: 0
+        first_name: first_name
+        email: email
+    PrivateUpdateUserModel:
+      title: PrivateUpdateUserModel
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+        city:
+          title: City
+          type: integer
+        additional_info:
+          title: Additional Info
+          type: string
+        is_admin:
+          title: Is Admin
+          type: boolean
+    PrivateUsersListHintMetaModel:
+      title: PrivateUsersListHintMetaModel
+      required:
+      - city
+      type: object
+      properties:
+        city:
+          title: City
+          type: array
+          items:
+            $ref: '#/components/schemas/CitiesHintModel'
+      example:
+        city:
+        - name: name
+          id: 0
+        - name: name
+          id: 0
+    PrivateUsersListMetaDataModel:
+      title: PrivateUsersListMetaDataModel
+      required:
+      - hint
+      - pagination
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedMetaDataModel'
+        hint:
+          $ref: '#/components/schemas/PrivateUsersListHintMetaModel'
+      example:
+        pagination:
+          total: 6
+          size: 5
+          page: 1
+        hint:
+          city:
+          - name: name
+            id: 0
+          - name: name
+            id: 0
+    PrivateUsersListResponseModel:
+      title: PrivateUsersListResponseModel
+      required:
+      - data
+      - meta
+      type: object
+      properties:
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersListElementModel'
+        meta:
+          $ref: '#/components/schemas/PrivateUsersListMetaDataModel'
+      example:
+        data:
+        - last_name: last_name
+          id: 0
+          first_name: first_name
+          email: email
+        - last_name: last_name
+          id: 0
+          first_name: first_name
+          email: email
+        meta:
+          pagination:
+            total: 6
+            size: 5
+            page: 1
+          hint:
+            city:
+            - name: name
+              id: 0
+            - name: name
+              id: 0
+    UpdateUserModel:
+      title: UpdateUserModel
+      type: object
+      properties:
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+    UpdateUserResponseModel:
+      title: UpdateUserResponseModel
+      required:
+      - birthday
+      - email
+      - first_name
+      - id
+      - last_name
+      - other_name
+      - phone
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        other_name:
+          title: Other Name
+          type: string
+        email:
+          title: Email
+          type: string
+        phone:
+          title: Phone
+          type: string
+        birthday:
+          title: Birthday
+          type: string
+          format: date
+      example:
+        birthday: 2000-01-23
+        phone: phone
+        last_name: last_name
+        other_name: other_name
+        id: 0
+        first_name: first_name
+        email: email
+    UsersListElementModel:
+      title: UsersListElementModel
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First Name
+          type: string
+        last_name:
+          title: Last Name
+          type: string
+        email:
+          title: Email
+          type: string
+      example:
+        last_name: last_name
+        id: 0
+        first_name: first_name
+        email: email
+    UsersListMetaDataModel:
+      title: UsersListMetaDataModel
+      required:
+      - pagination
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedMetaDataModel'
+      example:
+        pagination:
+          total: 6
+          size: 5
+          page: 1
+    UsersListResponseModel:
+      title: UsersListResponseModel
+      required:
+      - data
+      - meta
+      type: object
+      properties:
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersListElementModel'
+        meta:
+          $ref: '#/components/schemas/UsersListMetaDataModel'
+      example:
+        data:
+        - last_name: last_name
+          id: 0
+          first_name: first_name
+          email: email
+        - last_name: last_name
+          id: 0
+          first_name: first_name
+          email: email
+        meta:
+          pagination:
+            total: 6
+            size: 5
+            page: 1
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            type: string
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+
